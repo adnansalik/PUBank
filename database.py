@@ -8,14 +8,15 @@ def create_account():
     c.execute('''CREATE TABLE IF NOT EXISTS account 
                             (   account_number  INTEGER PRIMARY KEY,
                                 name            TEXT,
+                                age             INTEGER,
                                 card_number     TEXT,
                                 pin             TEXT,
                                 balance         INTEGER DEFAULT 0)''')
     conn.commit()
 
 
-def do_entry(account_number, name, card_number, pin, balance):
-    c.execute('INSERT INTO account VALUES(?,?,?,?,?)', (account_number, name, card_number, pin, balance))
+def do_entry(account_number, name, age, card_number, pin, balance):
+    c.execute('INSERT INTO account VALUES(?,?,?,?,?,?)', (account_number, name, age, card_number, pin, balance))
     conn.commit()
 
 
@@ -53,6 +54,7 @@ def get_acno(card_number):
 
 def del_account(account_number):
     c.execute('DELETE FROM account WHERE account_number = (?)', (account_number,))
+    c.execute(f'DROP TABLE IF EXISTS ac{account_number}')
     conn.commit()
 
 
@@ -63,10 +65,9 @@ def check_acno(card_number, pin):
 
 
 def show_details():
-    print('ACCOUNT NUMBER NAME CARD NUMBER PIN BALANCE')
-    for rows in c.execute('SELECT * FROM account'):
-        account_no, name, card_no, pin, bal = rows
-        print(f'{account_no} {name} {card_no} {pin} {bal}')
+    print('{:<18}{:<24}{:<7}{:<20}{:<8}{}'.format('ACCOUNT NUMBER', 'NAME', 'AGE', 'CARD NUMBER', 'PIN', 'BALANCE'))
+    for acno, name, age, card, pin, bal in c.execute(f'SELECT * FROM account'):
+        print("{:<18}{:<24}{:<7}{:<20}{:<8}{}".format(acno, name, age, card, pin, bal))
 
 
 def get_account_info(account_number):
@@ -76,5 +77,11 @@ def get_account_info(account_number):
 
 
 def transaction_details(account_number):
-    for rows in c.execute(f'SELECT * from ac{account_number}'):
-        print(rows)
+    for ele1, ele2, ele3 in c.execute(f'SELECT * FROM ac{account_number}'):
+        print("{:<23}{:<13}{}".format(ele1, ele2, ele3))
+
+
+def show_mini(account_number):
+    print("{:<23}{:<13}{}".format('Date', 'Type', 'Amount'))
+    for ele1, ele2, ele3 in c.execute(f'SELECT * FROM ac{account_number} ORDER BY date DESC Limit 5'):
+        print("{:<23}{:<13}{}".format(ele1, ele2, ele3))

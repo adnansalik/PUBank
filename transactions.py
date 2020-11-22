@@ -13,18 +13,19 @@ def add_income(account_number, amount):
     db.update_bal(account_number, cur_bal)
     t_type = 'Deposited'
     db.do_transact(account_number, t_type, amount)
-    print(f'{amount} has been credited\n')
+    print(f'{amount} has been credited\nYour current balance now is: {cur_bal}')
 
 
 def sub_income(account_number, amount):
     cur_bal = db.get_bal(account_number)
-    if amount > cur_bal:
+    if amount > cur_bal[0]:
         print("You don't have enough balance")
     else:
         cur_bal = cur_bal[0] - amount
         db.update_bal(account_number, cur_bal)
         t_type = 'Withdrawn'
         db.do_transact(account_number, t_type, amount)
+        print(f'{amount} has been debited\nYour current balance now is: {cur_bal}')
 
 
 def do_transfer(account):
