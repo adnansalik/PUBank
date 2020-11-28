@@ -40,9 +40,14 @@ def do_transfer(account):
         amt = int(input('Enter the amount you want to transfer: '))
         if amt > sender_bal[0]:
             print("You don't have enough balance: ")
+        elif amt < 100:
+            print('Amount must be more than Rs 99')
+        elif amt > 200000:
+            print('Cannot transfer more than Rs 2,00,000')
         else:
             sub_income(account, amt)
             add_income(transfer_id[0], amt)
+            print('Transfer complete')
 
 
 def del_account(account_number):

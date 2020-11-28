@@ -6,8 +6,7 @@ c = conn.cursor()
 
 def create_account():
     c.execute('''CREATE TABLE IF NOT EXISTS account 
-                            (   id              INTEGER AUTOINCREMENT, 
-                                account_number  INTEGER UNIQUE PRIMARY KEY,
+                            (   account_number  INTEGER UNIQUE PRIMARY KEY,
                                 name            TEXT,
                                 age             INTEGER,
                                 card_number     TEXT,

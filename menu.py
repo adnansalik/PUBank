@@ -19,14 +19,19 @@ def login(account):
                 tr.balance(account)
             elif choice == '3':
                 amount = int(input('Enter the amount you want to add: '))
-                tr.add_income(account, amount)
-                cur_bal = db.get_bal(account)
-                print(f'{amount} has been credited\nYour current balance now is: {cur_bal}')
+                if amount < 100:
+                    print('Amount must be more than Rs 99')
+                elif amount > 500000:
+                    print('Cannot add more than Rs 5,00,000')
+                else:
+                    tr.add_income(account, amount)
+                    cur_bal = db.get_bal(account)
+                    print(f'{amount} has been credited\nYour current balance now is: {cur_bal[0]}')
             elif choice == '4':
                 amount = int(input('Enter the amount you want to take: '))
                 tr.sub_income(account, amount)
                 cur_bal = db.get_bal(account)
-                print(f'{amount} has been debited\nYour current balance now is: {cur_bal}')
+                print(f'{amount} has been debited\nYour current balance now is: {cur_bal[0]}')
             elif choice == '5':
                 tr.do_transfer(account)
             elif choice == '6':
