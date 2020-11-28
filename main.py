@@ -28,7 +28,7 @@ def main_menu():
             db.show_details()
         elif choice == '0':
             stop()
-            break
+            break                                                                                                                                                         
 
 
 if __name__ == '__main__':

@@ -4,27 +4,18 @@ import random
 
 
 def luhn(number):
-    card_number = list(number)
-    card_number = [int(x) for x in card_number]  # Converts the digits of the AccountNumber to <class 'int'>
-
-    for i in range(0, len(card_number), 2):  # Multiplies the digits at odd(here even) index by 2
-        card_number[i] = card_number[i] * 2
-
-    for i in range(len(card_number)):  # Subtracts the digits of the AccountNumber by 9 if they are greater than 9
-        if card_number[i] > 9:
-            card_number[i] = card_number[i] - 9
-
-    total = 0
-    for x in card_number:
-        total = total + int(x)  # Calculates the sum of digits in the AccountNumber
-
-    last = 0
-    for i in range(10):
-        if (total + i) % 10 == 0:
-            last = i  # Calculates the digit which when added to sum is a multiple of 10
-            break
-
-    return last
+    _sum = 0
+    for i in range(0, len(number)):
+        j = int(number[i])
+        if (i + 1) % 2 != 0:
+            j = j * 2
+        if j > 9:
+            j = j - 9
+        _sum = _sum + j
+    if _sum % 10 == 0:
+        return 0
+    else:
+        return 10 - (_sum % 10)
 
 
 def create_card():

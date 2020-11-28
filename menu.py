@@ -20,9 +20,13 @@ def login(account):
             elif choice == '3':
                 amount = int(input('Enter the amount you want to add: '))
                 tr.add_income(account, amount)
+                cur_bal = db.get_bal(account)
+                print(f'{amount} has been credited\nYour current balance now is: {cur_bal}')
             elif choice == '4':
                 amount = int(input('Enter the amount you want to take: '))
                 tr.sub_income(account, amount)
+                cur_bal = db.get_bal(account)
+                print(f'{amount} has been debited\nYour current balance now is: {cur_bal}')
             elif choice == '5':
                 tr.do_transfer(account)
             elif choice == '6':
